@@ -19,22 +19,16 @@
                 <h2>Enter a Task</h2>
                 <input type="text" class="form-control" id="enteredTask" placeholder="Enter task">
             </div>
+            
             <button type="button" class="btn btn-primary" id="btnAddTask" name="btnAddTask">Add Task</button>
             
             <!-- Tasks will be nested within this div when the user clicks on btnAddTask-->
-            <div class="mt-3" id="toCompleteTasksContainer">
-                <!--<h2>Tasks to be Completed</h2> -->
-                <!-- <ul id="taskList" class="toCompleteListGroup"></ul>
-                <span class="toCompleteTasks"></span> -->
-            </div>
+            <div class="mt-3" id="toCompleteTasksContainer"></div>
 
             <!-- Tasks will be nested within this div when user checks the checkbox-->
-            <div class="mt-3" id="completedTasksContainer">
-                <!--<h2>Completed Tasks</h2> -->
-                <!-- <ul id="completedTaskList" class="completedListGroup"></ul>
-                <span class="CompletedTasks"></span> -->
-                <button type="button" class="btn btn-danger" id="btnClearCompletedTasks" name="btnClearCompletedTasks">Clear Tasks</button>
-            </div>        
+            <div class="mt-3" id="completedTasksContainer"></div>
+            
+            <button type="button" class="btn btn-danger" id="btnClearCompletedTasks" name="btnClearCompletedTasks">Clear Tasks</button>
         </form>
     </body>
 </html>
