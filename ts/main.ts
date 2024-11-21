@@ -1,13 +1,14 @@
+// Event listener using named function
+document.addEventListener("DOMContentLoaded", initializeToDoList);
+
 // Main initialization function
 function initializeToDoList() {
     let addTaskButton = document.getElementById("btnAddTask") as HTMLButtonElement;
     let clearTaskButton = document.getElementById("btnClearCompletedTasks") as HTMLButtonElement;
+    
     addTaskButton.addEventListener("click", addTask);
     clearTaskButton.addEventListener("click", clearCompletedTasks);
 }
-
-// Event listener using named function
-document.addEventListener("DOMContentLoaded", initializeToDoList);
 
 /**
  * Function for when the add task button is clicked
@@ -16,15 +17,20 @@ document.addEventListener("DOMContentLoaded", initializeToDoList);
  * @returns void
  */
 function addTask() {
-    // input validation
-    const enteredTask = document.getElementById("enteredTask") as HTMLInputElement;
-    const enteredTaskValue = enteredTask.value.trim();
-    if (enteredTaskValue.length === 0) {
-        return alert("Please enter a task");
+    let enteredTask = document.getElementById("enteredTask") as HTMLInputElement;
+    let enteredTaskValue = enteredTask.value.trim();
+    
+    if (isValidTask(enteredTaskValue)) {
+        createTask(enteredTaskValue);
+        clearInputField(enteredTask);
+        enteredTask.focus();
     }
-    // run function to create task
-    createTask(enteredTaskValue);
+    else {
+        showErrorMessage();
+    }
+    
 }
+
 
 /**
  * Helper function to create a task in the toCompleteTasksContainer along with a checkbox
@@ -33,11 +39,11 @@ function addTask() {
  */
 function createTask(enteredTaskValue: string): void {
     // Get container
-    const toCompleteTasksContainer = document.getElementById("toCompleteTasksContainer");
+    let toCompleteTasksContainer = document.getElementById("toCompleteTasksContainer");
 
     // Create heading if not exists
     if (!document.querySelector("#toCompleteTasksContainer h2")) {
-        const heading = document.createElement("h2");
+        let heading = document.createElement("h2");
         heading.textContent = "Tasks to be Completed";
         toCompleteTasksContainer?.appendChild(heading);
     }
@@ -51,17 +57,17 @@ function createTask(enteredTaskValue: string): void {
     }
 
     // Create list item
-    const listItem = document.createElement("li");
+    let listItem = document.createElement("li");
     listItem.className = "list-group-item d-flex align-items-center";
 
     // Create checkbox
-    const checkbox = document.createElement("input");
+    let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.className = "form-check-input me-2";
-    checkbox.addEventListener("change", () => handleTaskCompletion(checkbox));
+    checkbox.addEventListener("change", () => taskCompletion(checkbox));
 
     // Create text span
-    const taskText = document.createElement("span");
+    let taskText = document.createElement("span");
     taskText.textContent = enteredTaskValue;
     taskText.className = "ms-2";
 
@@ -69,24 +75,20 @@ function createTask(enteredTaskValue: string): void {
     listItem.appendChild(checkbox);
     listItem.appendChild(taskText);
     taskList.appendChild(listItem);
-
-    // Clear input
-    const input = document.getElementById("enteredTask") as HTMLInputElement;
-    input.value = "";
 }
 
 /**
  * Function to move task to completed section when checkbox is checked
  * @param checkbox The checkbox element that was clicked
  */
-function handleTaskCompletion(checkbox: HTMLInputElement): void {
-    const completedTasksContainer = document.getElementById("completedTasksContainer");
-    const listItem = checkbox.parentElement;
+function taskCompletion(checkbox: HTMLInputElement): void {
+    let completedTasksContainer = document.getElementById("completedTasksContainer");
+    let listItem = checkbox.parentElement;
 
     // Get or create the completed tasks list
     let completedTasksList = document.querySelector("#completedTasksContainer ul");
     if (!completedTasksList) {
-        const heading = document.createElement("h2");
+        let heading = document.createElement("h2");
         heading.textContent = "Completed Tasks";
         completedTasksContainer?.appendChild(heading);
 
@@ -96,21 +98,23 @@ function handleTaskCompletion(checkbox: HTMLInputElement): void {
     }
 
     if (checkbox.checked && listItem) {
-        // Add strike-through style to task text
-        const taskText = listItem.querySelector("span");
+        // Add strike-through style and color to task text
+        let taskText = listItem.querySelector("span");
         if (taskText) {
             taskText.style.textDecoration = "line-through";
+            taskText.style.color = "gray";
         }
         // Move to completed tasks
         completedTasksList.appendChild(listItem);
     } else if (!checkbox.checked && listItem) {
-        // Remove strike-through style
-        const taskText = listItem.querySelector("span");
+        // Remove strike-through style and color
+        let taskText = listItem.querySelector("span");
         if (taskText) {
             taskText.style.textDecoration = "none";
+            taskText.style.color = "black";
         }
         // Move back to to-do list
-        const todoList = document.querySelector("#toCompleteTasksContainer ul");
+        let todoList = document.querySelector("#toCompleteTasksContainer ul");
         if (todoList) {
             todoList.appendChild(listItem);
         }
@@ -118,16 +122,16 @@ function handleTaskCompletion(checkbox: HTMLInputElement): void {
 }
 
 /**
- * Function to handle moving completed tasks to completed section
+ * Function to move completed tasks to completed section
  */
 function moveCompletedTasks(): void {
     // Get containers
-    const completedTasksContainer = document.getElementById("completedTasksContainer");
-    const completedTasks = document.querySelectorAll('input[type="checkbox"]:checked');
+    let completedTasksContainer = document.getElementById("completedTasksContainer");
+    let completedTasks = document.querySelectorAll('input[type="checkbox"]:checked');
 
     // Create completed tasks section if it doesn't exist
     if (!document.querySelector("#completedTasksContainer h2")) {
-        const heading = document.createElement("h2");
+        let heading = document.createElement("h2");
         heading.textContent = "Completed Tasks";
         completedTasksContainer?.appendChild(heading);
     }
@@ -142,12 +146,13 @@ function moveCompletedTasks(): void {
 
     // Move each completed task
     completedTasks.forEach((checkbox: Element) => {
-        const listItem = checkbox.parentElement;
+        let listItem = checkbox.parentElement;
         if (listItem) {
             // Add strike-through style
-            const taskText = listItem.querySelector("span");
+            let taskText = listItem.querySelector("span");
             if (taskText) {
                 taskText.style.textDecoration = "line-through";
+                taskText.style.color = "gray";
             }
             // Move to completed section
             taskList?.appendChild(listItem);
@@ -163,4 +168,28 @@ function clearCompletedTasks(): void {
     if (completedTasksList) {
         completedTasksList.innerHTML = "";
     }
+}
+
+/**
+ * function to validate the task text is not empty
+ * @param taskText the user input text
+ * @returns true if task text is not empty
+ */
+function isValidTask(taskText: string): boolean {
+    return taskText.length > 0;
+}
+
+/**
+ * Shows error message for invalid input
+ */
+function showErrorMessage(): void {
+    alert("Please enter a task");
+}
+
+/**
+ * Clears the input field
+ * @param input user task input
+ */
+function clearInputField(input: HTMLInputElement): void {
+    input.value = "";
 }
