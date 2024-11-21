@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>To Do List</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script defer src="/js/main.js"></script>
     </head>
 
@@ -19,19 +19,21 @@
                 <h2>Enter a Task</h2>
                 <input type="text" class="form-control" id="enteredTask" placeholder="Enter task">
             </div>
-            <button type="button" class="btnAddTask" id="btnAddTask" name="btnAddTask">Add Task</button>
+            <button type="button" class="btn btn-primary" id="btnAddTask" name="btnAddTask">Add Task</button>
             
-            <div class="mt-3">
-                <h2>Tasks to be Completed</h2>
-                <ul id="taskList" class="toCompleteListGroup"></ul>
-                <span class="toCompleteTasks"></span>
+            <!-- Tasks will be nested within this div when the user clicks on btnAddTask-->
+            <div class="mt-3" id="toCompleteTasksContainer">
+                <!--<h2>Tasks to be Completed</h2> -->
+                <!-- <ul id="taskList" class="toCompleteListGroup"></ul>
+                <span class="toCompleteTasks"></span> -->
             </div>
 
-            <div class="mt-3">
-                <h2>Completed Tasks</h2>
-                <ul id="completedTaskList" class="completedListGroup"></ul>
-                <span class="CompletedTasks"></span>
-                <button type="button" class="btnClearCompletedTasks" id="btnClearCompletedTasks" name="btnClearCompletedTasks">Clear Tasks</button>
+            <!-- Tasks will be nested within this div when user checks the checkbox-->
+            <div class="mt-3" id="completedTasksContainer">
+                <!--<h2>Completed Tasks</h2> -->
+                <!-- <ul id="completedTaskList" class="completedListGroup"></ul>
+                <span class="CompletedTasks"></span> -->
+                <button type="button" class="btn btn-danger" id="btnClearCompletedTasks" name="btnClearCompletedTasks">Clear Tasks</button>
             </div>        
         </form>
     </body>
